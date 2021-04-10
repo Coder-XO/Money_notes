@@ -3,7 +3,7 @@
     <Number-pad/>
     <Types/>
     <Notes/>
-    <Tags/>
+    <Tags :datasource="tags"/>
   </Layout>
 </template>
 <script lang="ts">
@@ -14,7 +14,12 @@ import Tags from '@/components/Money/Tags.vue';
 
 export default {
   name: 'money',
-  components: {Tags, Notes, Types, NumberPad}
+  components: {Tags, Notes, Types, NumberPad},
+  data() {
+    return {
+      tags: ['衣', '食', '住', '行']
+    };
+  }
 };
 </script>
 <!-- 为了跨CSS作用域-->

@@ -45,7 +45,7 @@ nav {
   }
 
     .item.selected {
-    color: $color-highLight;
+    color: darken($color-highLight,16%);
   }
 }
 </style>
