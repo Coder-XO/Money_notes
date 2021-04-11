@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout"><!-- 向子组件中传递类名来控制CSS -->
-    {{ recordList }}
     <Number-pad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <Notes @update:value="onUpdateNotes"/>
@@ -14,29 +13,23 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
+import model from '@/model';
 
-window.localStorage.setItem('version','0.0.1');
+const recordList = model.fetch();    // 获取localStorage数据
 
-type Record = {     // TS声明对象类型
-  tags: string[],
-  notes: string,
-  type: string,
-  amount: number,     //  数据类型
-  createdAt: Date | undefined   // 类
-}
 
 @Component({
   components: {Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行'];
-  recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');     //  保存用户账目数据
-  record: Record = {
+  recordList = recordList;     //  保存用户账目数据
+  record = {
     tags: [],
     notes: '',
     type: '-',
     amount: 0,
-    createdAt:undefined
+    createdAt: Date || undefined
   };
 
   onUpdateTags(value: string[]) {
@@ -49,14 +42,14 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const record2:Record = JSON.parse(JSON.stringify(this.record));
+    const record2 = model.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
   }
 
   @Watch('recordList')
   onRecordListChange() {
-    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));     // 本地保存数据
+    model.save(this.recordList);     // 本地保存数据
   }
 
 }
