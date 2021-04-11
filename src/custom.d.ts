@@ -4,5 +4,5 @@ type RecordItem = {     // TS声明对象类型
     notes: string,
     type: string,
     amount: number,     //  数据类型
-    createdAt: Date | undefined   // 类
+    createdAt?: Date   // 类
 }

@@ -22,14 +22,13 @@ const recordList = model.fetch();    // 获取localStorage数据
   components: {Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行'];
+  tags = ['衣', '食', '住', '行','彩票'];
   recordList = recordList;     //  保存用户账目数据
   record = {
     tags: [],
     notes: '',
     type: '-',
-    amount: 0,
-    createdAt: Date || undefined
+    amount: 0
   };
 
   onUpdateTags(value: string[]) {
