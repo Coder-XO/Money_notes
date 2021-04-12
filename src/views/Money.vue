@@ -13,27 +13,30 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
-import model from '@/model';
+import recordListModel from '@/models/recordListModel';
+import tagListModel from '@/models/tagListModel';
 
-const recordList = model.fetch();    // 获取localStorage数据
 
+/* 获取必要数据 */
+const recordList = recordListModel.fetch();    // 获取localStorage数据
+const tagList = tagListModel.fetch();     //  获取当前localStorage保存的标签
 
 @Component({
   components: {Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行','彩票'];
-  recordList:RecordItem[] = recordList;     //  保存用户账目数据  为啥有问题
-  record:RecordItem = {
+  tags = tagList;    //   从localStorage中取值
+  recordList: RecordItem[] = recordList;     //  保存用户账目数据
+  record: RecordItem = {
     tags: [],
     notes: '',
     type: '-',
-    amount: 0
+    amount: 0,
+    createdAt: Date || undefined
   };
 
   onUpdateTags(value: string[]) {
     this.record.tags = value;
-    console.log(11111);
   }
 
   onUpdateNotes(value: string) {
@@ -41,14 +44,14 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const record2 = model.clone(this.record);
+    const record2 = recordListModel.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
   }
 
   @Watch('recordList')
   onRecordListChange() {
-    model.save(this.recordList);     // 本地保存数据
+    recordListModel.save(this.recordList);     // 本地保存数据
   }
 
 }
