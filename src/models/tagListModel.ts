@@ -15,7 +15,6 @@ type TagListModel = {
 const tagListModel: TagListModel = {
     data: [],
     fetch() {
-        console.log('fuck');
         this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
         return this.data;
     },
