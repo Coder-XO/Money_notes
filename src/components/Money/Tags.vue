@@ -4,8 +4,8 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="item in dataSource" :key="item" :class="{ selected: selectedTags.indexOf(item)>=0 }"
-          @click="toggle(item)">{{ item }}
+      <li v-for="item in dataSource" :key="item.name" :class="{ selected: selectedTags.indexOf(item)>=0 }"
+          @click="toggle(item)">{{ item.name }}
       </li>
     </ul>
   </div>
@@ -32,15 +32,15 @@ export default class Tags extends Vue {
 
   create() {
     const name = window.prompt('请输入标签名字(最多四个字)');
-    if (name !== null) {
+    if (name !== null && name !== '') {
       if (name.length <= 4) {
         if (this.dataSource) {
           this.$emit('update:dataSource', [...this.dataSource, name]);
         } else {
           return;
         }
-      }else if(name.length > 4){
-        alert('标签名过长')
+      } else if (name.length > 4) {
+        alert('标签名过长');
         return;
       }
       if (name === '') {
