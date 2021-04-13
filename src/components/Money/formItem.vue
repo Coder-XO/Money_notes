@@ -1,7 +1,7 @@
 <template>
   <label class="notes">
     <span class="name">{{this.fileName}}</span>
-    <input type="text" placeholder="在这里输入备注" v-model="value" :placeholder="this.placeholder">
+    <input type="text" placeholder="在这里输入备注" :value="value" @input="onValueChanged($event.target.value)" :placeholder="this.placeholder">
   </label>
 </template>
 
@@ -11,7 +11,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class formItem extends Vue {
-  value = '';
+  @Prop({default:''}) readonly value:string;
 
   @Prop({required:true}) fileName!:string;
   @Prop() placeholder?:string;

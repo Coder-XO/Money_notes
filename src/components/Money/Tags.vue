@@ -4,7 +4,7 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="item in dataSource" :key="item.name" :class="{ selected: selectedTags.indexOf(item)>=0 }"
+      <li v-for="item in dataSource" :key="item.id" :class="{ selected: selectedTags.indexOf(item)>=0 }"
           @click="toggle(item)">{{ item.name }}
       </li>
     </ul>
