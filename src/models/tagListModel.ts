@@ -1,3 +1,5 @@
+import createId from '@/lib/createId';
+
 const localStorageKeyName = 'tagList';
 
 type Tag = {    // 给标签的编辑页面做ID
@@ -26,6 +28,7 @@ const tagListModel: TagListModel = {
         if (names.indexOf(name) >= 0) {
             return 'duplicated';
         }
+        const id = createId().toString();     //   获取生成的ID
         this.data.push({id: name, name: name});
         this.save();
         return 'success';
