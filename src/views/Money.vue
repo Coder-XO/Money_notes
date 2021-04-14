@@ -22,19 +22,21 @@ import FormItem from '@/components/Money/formItem.vue';
 
 /* 获取必要数据 */
 const recordList = recordListModel.fetch();    // 获取localStorage数据
-const tagList = tagListModel.fetch();     //  获取当前localStorage保存的标签
+// const tagList = tagListModel.fetch();     //  获取当前localStorage保存的标签
 
 @Component({
   components: {FormItem, Tags, Types, NumberPad}
 })
 export default class Money extends Vue {
-  tags = tagList;    //   从localStorage中取值
+  //@ts-ignore
+  tags = window.tagList;    //   从localStorage中取值
   recordList: RecordItem[] = recordList;     //  保存用户账目数据
   record: RecordItem = {
     tags: [],
     notes: '',
     type: '-',
     amount: 0,
+    // @ts-ignore
     createdAt: Date || undefined
   };
 
@@ -54,11 +56,6 @@ export default class Money extends Vue {
   onRecordListChange() {
     recordListModel.save();     // 本地保存数据9
   }
-
-  created() {
-    this.tags = tagListModel.fetch();
-  }
-
 }
 
 </script>

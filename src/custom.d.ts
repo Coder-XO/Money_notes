@@ -6,3 +6,7 @@ type RecordItem = {     // TS声明对象类型
     amount: number,     //  数据类型
     createdAt?: Date   // 类
 }
+
+interface window {      //  声明window下挂的属性
+    tagList:Tag[]
+}

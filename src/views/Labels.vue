@@ -23,7 +23,8 @@ tagListModel.fetch();
   components: {Button}
 })
 export default class Labels extends Vue {
-  tags = tagListModel.fetch();
+  //@ts-ignore
+  tags = window.tagList;     //  取数据
 
   createTag() {
     const name = window.prompt('请输出标签名');
