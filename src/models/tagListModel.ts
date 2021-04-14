@@ -9,8 +9,9 @@ type TagListModel = {
     data: Tag[]
     fetch: () => Tag[]
     create: (name: string) => 'success' | 'duplicated' //  联合类型
-    save: () => void,
+    save: () => void
     update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
+    remove: (id: string) => boolean
 }
 
 const tagListModel: TagListModel = {
@@ -47,6 +48,18 @@ const tagListModel: TagListModel = {
     },
     save() {
         window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
+    },
+    remove(id: string) {
+        let index = -1;
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+        this.data.splice(index, 1);
+        this.save();
+        return true;
     }
 };
 export default tagListModel;
