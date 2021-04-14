@@ -6,7 +6,7 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <form-item :value="tag.name" file-name="标签名" placeholder="请输入标签名"/>
+      <form-item :value="tag.name" file-name="标签名" placeholder="请输入标签名" @update:value="updateTag"/>
     </div>
     <div class="button-wrapper">
       <Button>删除标签</Button>
@@ -29,7 +29,7 @@ import Button from '@/components/Button.vue';
 export default class EditLabel extends Vue {
   tag?: { id: string, name: string } = undefined;
 
-  created() {
+  created() {       // 声明周期函数
     const id = this.$route.params.id;    // 获取 URL id
     tagListModel.fetch();
     const tags = tagListModel.data;
@@ -38,6 +38,12 @@ export default class EditLabel extends Vue {
       this.tag = tag;
     } else {
       this.$router.replace('/404');
+    }
+  }
+
+  updateTag(name: string) {
+    if (this.tag) {
+      tagListModel.update(this.tag.id, name);
     }
   }
 };

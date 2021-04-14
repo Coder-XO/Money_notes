@@ -56,6 +56,9 @@ export default class Money extends Vue {
   onRecordListChange() {
     recordListModel.save(this.recordList);     // 本地保存数据
   }
+  created(){
+    this.tags = tagListModel.fetch();
+  }
 
 }
 
