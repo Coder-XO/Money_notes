@@ -2,19 +2,7 @@ import createId from '@/lib/createId';
 
 const localStorageKeyName = 'tagList';
 
-type Tag = {    // 给标签的编辑页面做ID
-    id: string;
-    name: string;
-}
 
-type TagListModel = {
-    data: Tag[]
-    fetch: () => Tag[]
-    create: (name: string) => 'success' | 'duplicated' //  联合类型
-    save: () => void
-    update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
-    remove: (id: string) => boolean
-}
 
 const tagListModel: TagListModel = {
     data: [],
