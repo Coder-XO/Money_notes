@@ -14,14 +14,11 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import formItem from '@/components/Money/formItem.vue';
 import Tags from '@/components/Money/Tags.vue';
-import {Component, Watch} from 'vue-property-decorator';
-import recordListModel from '@/models/recordListModel';
+import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/formItem.vue';
 
 
-/* 获取必要数据 */
-const recordList = recordListModel.fetch();    // 获取localStorage数据
-// const tagList = tagListModel.fetch();     //  获取当前localStorage保存的标签
+
 
 @Component({
   components: {FormItem, Tags, Types, NumberPad}
@@ -29,7 +26,8 @@ const recordList = recordListModel.fetch();    // 获取localStorage数据
 export default class Money extends Vue {
   //@ts-ignore
   tags = window.tagList;    //   从localStorage中取值
-  recordList: RecordItem[] = recordList;     //  保存用户账目数据
+  //@ts-ignore
+  recordList = window.recordList;     //  保存用户账目数据
   record: RecordItem = {
     tags: [],
     notes: '',
@@ -48,12 +46,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    recordListModel.ceeate(this.record);   // 封装了
-  }
-
-  @Watch('recordList')
-  onRecordListChange() {
-    recordListModel.save();     // 本地保存数据9
+    window.createRecord(this.record);
   }
 }
 
