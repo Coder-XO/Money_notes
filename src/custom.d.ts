@@ -23,11 +23,13 @@ type TagListModel = {
 }
 
 interface Window {      //  声明window下挂的属性
-    tagList: Tag[],
-    createTag: (name: string) => void,
-    removeTag: (id: string) => boolean,
-    updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated',
-    findTag: (id: string) => Tag | undefined,
-    recordList: RecordItem[],
-    createRecord: (record: RecordItem) => void
+    // store: {
+    //     tagList: Tag[],
+    //     createTag: (name: string) => void,
+    //     removeTag: (id: string) => boolean,
+    //     updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated',
+    //     findTag: (id: string) => Tag | undefined,
+    //     recordList: RecordItem[],
+    //     createRecord: (record: RecordItem) => void
+    // }
 }

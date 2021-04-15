@@ -15,22 +15,19 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import Button from '@/components/Button.vue';
+import store from '@/store/index2';
 
-tagListModel.fetch();
 @Component({
   components: {Button}
 })
 export default class Labels extends Vue {
-  //@ts-ignore
-  tags = window.tagList;     //  取数据
+  tags = store.tagList;     //  取数据
 
   createTag() {
     const name = window.prompt('请输出标签名');
     if (name) {
-      // @ts-ignore
-      window.createTag(name);
+      store.createTag(name);
     }
   }
 }

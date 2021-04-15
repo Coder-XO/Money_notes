@@ -6,7 +6,7 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <form-item :value="tag.name" file-name="标签名" placeholder="请输入标签名" @update:value="update"/>
+      <FormItem :value="tag.name" file-name="标签名" placeholder="请输入标签名" @update:value="update"/>
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -18,9 +18,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import formItem from '@/components/Money/formItem.vue';
-import FormItem from '@/components/Money/formItem.vue';
+import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
+import store from '@/store/index2';
 
 @Component({
   components: {Button, FormItem}
@@ -29,8 +29,7 @@ export default class EditLabel extends Vue {
   tag?: Tag = undefined;
 
   created() {       // 生命周期函数
-    // @ts-ignore
-    this.tag = window.findTag(this.$route.params.id);    // 根据当前URL后缀来寻找当前的tag
+    this.tag = store.findTag(this.$route.params.id);    // 根据当前URL后缀来寻找当前的tag
     if (!this.tag) {
       this.$router.replace('/404');
     }
@@ -38,15 +37,13 @@ export default class EditLabel extends Vue {
 
   update(name: string) {
     if (this.tag) {
-      // @ts-ignore
-      window.updateTag(this.tag.id, name);
+      store.updateTag(this.tag.id, name);
     }
   }
 
   remove() {
     if (this.tag) {
-      // @ts-ignore
-      if (window.removeTag(this.tag.id)) {
+      if (store.removeTag(this.tag.id)) {
         this.$router.back();
       } else {
         window.alert('删除失败');

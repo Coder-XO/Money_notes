@@ -3,7 +3,7 @@
     <Number-pad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <div class="notes">
-      <form-item file-name="备注" @update:value="onUpdateNotes" placeholder="在这里输入备注"/>
+      <FormItem file-name="备注" @update:value="onUpdateNotes" placeholder="在这里输入备注"/>
     </div>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
   </Layout>
@@ -12,10 +12,10 @@
 import Vue from 'vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
-import formItem from '@/components/Money/formItem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component} from 'vue-property-decorator';
-import FormItem from '@/components/Money/formItem.vue';
+import FormItem from '@/components/Money/FormItem.vue';
+import store from '@/store/index2';
 
 
 
@@ -25,16 +25,14 @@ import FormItem from '@/components/Money/formItem.vue';
 })
 export default class Money extends Vue {
   //@ts-ignore
-  tags = window.tagList;    //   从localStorage中取值
+  tags = store.tagList;    //   从localStorage中取值
   //@ts-ignore
-  recordList = window.recordList;     //  保存用户账目数据
+  recordList = store.recordList;     //  保存用户账目数据
   record: RecordItem = {
     tags: [],
     notes: '',
     type: '-',
     amount: 0,
-    // @ts-ignore
-    createdAt: Date || undefined
   };
 
   onUpdateTags(value: string[]) {
@@ -46,7 +44,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    window.createRecord(this.record);
+    store.createRecord(this.record);
   }
 }
 
