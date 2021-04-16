@@ -5,7 +5,7 @@
     <div class="notes">
       <FormItem file-name="备注" @update:value="onUpdateNotes" placeholder="在这里输入备注"/>
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags/>
   </Layout>
 </template>
 <script lang="ts">
@@ -25,8 +25,6 @@ import store from '@/store/index2';
 })
 export default class Money extends Vue {
   //@ts-ignore
-  tags = store.tagList;    //   从localStorage中取值
-  //@ts-ignore
   recordList = store.recordList;     //  保存用户账目数据
   record: RecordItem = {
     tags: [],
@@ -34,10 +32,6 @@ export default class Money extends Vue {
     type: '-',
     amount: 0,
   };
-
-  onUpdateTags(value: string[]) {
-    this.record.tags = value;
-  }
 
   onUpdateNotes(value: string) {
     this.record.notes = value;
