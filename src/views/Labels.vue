@@ -21,7 +21,6 @@ import {mixins} from 'vue-class-component';
 
 @Component({
   components: {Button},
-  mixins: [tagHelper],
   computed: {
     tags() {
       return this.$store.state.tagList;

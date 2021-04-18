@@ -25,11 +25,15 @@ import Button from '@/components/Button.vue';
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
-  tag?: Tag = undefined;
 
-  created() {       // 生命周期函数
-    //TODO
-    //this.tag = store.findTag(this.$route.params.id);    // 根据当前URL后缀来寻找当前的tag
+  get tag(){
+    return this.$store.state.currentTag;
+  }
+
+  created() {
+    const id = this.$route.params.id;
+    this.$store.commit('setCurrentTag',id);
+    //@ts-ignore
     if (!this.tag) {
       this.$router.replace('/404');
     }
@@ -45,7 +49,7 @@ export default class EditLabel extends Vue {
   remove() {
     if (this.tag) {
       //TODO
-      return
+      return;
       // if (store.removeTag(this.tag.id)) {
       //   this.$router.back();
       // } else {
