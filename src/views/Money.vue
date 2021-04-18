@@ -17,14 +17,14 @@ import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 
 @Component({
-  components: {FormItem, Tags, Types, NumberPad},
-  computed: {
-    recordList() {
-      return this.$store.state.recordList;
-    }
-  }
+  components: {FormItem, Tags, Types, NumberPad}
 })
 export default class Money extends Vue {
+
+  get recordList(){
+    return this.$store.state.recordList;
+  }
+
   record: RecordItem = {
     tags: [],
     notes: '',
