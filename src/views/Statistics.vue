@@ -2,7 +2,7 @@
   <div class="x">
     <Layout>
       <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-      <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval"/>
+      <Tabs height="48px" class-prefix="interval" :data-source="intervalList" :value.sync="interval"/>
       <div>
         type:{{ type }}
         <br/>
@@ -32,7 +32,7 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
-.x ::v-deep .type-tabs-item { // CSS作用到组件内部
+::v-deep .type-tabs-item { // CSS作用到组件内部
   background: white;
 
   &.selected {
@@ -42,20 +42,10 @@ export default class Statistics extends Vue {
       display: none;
     }
   }
-}
-.x ::v-deep .interval-tabs-item { // CSS作用到组件内部
-  background: #c4c4c4;
-  height: 48px;
-  //&.selected {
-  //  &.selected::after {
-  //    content: '';
-  //    position: absolute;
-  //    bottom: 0;
-  //    left: 0;
-  //    width: 100%;
-  //    height: 4px;
-  //    background: #333;
-  //  }
-  //}
+
+  .interval-tabs-item { // CSS作用到组件内部
+    background: #c4c4c4;
+    height: 48px;
+  }
 }
 </style>
