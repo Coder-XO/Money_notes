@@ -43,20 +43,19 @@ export default class Statistics extends Vue {
     }
   }
 }
-
 .x ::v-deep .interval-tabs-item { // CSS作用到组件内部
   background: #c4c4c4;
-
-  &.selected {
-    &.selected::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: #333;
-    }
-  }
+  height: 48px;
+  //&.selected {
+  //  &.selected::after {
+  //    content: '';
+  //    position: absolute;
+  //    bottom: 0;
+  //    left: 0;
+  //    width: 100%;
+  //    height: 4px;
+  //    background: #333;
+  //  }
+  //}
 }
 </style>
