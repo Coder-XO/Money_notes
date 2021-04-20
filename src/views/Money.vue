@@ -50,7 +50,7 @@ export default class Money extends Vue {
 
 </script>
 <!-- 为了跨CSS作用域-->
-<style lang="scss">
+<style lang="scss" scoped>
 .layout-content {
   //border: 5px solid red;
   display: flex;

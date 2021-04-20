@@ -5,12 +5,18 @@ type Tag = {    // 给标签的编辑页面做ID
     name: string;
 }
 
+type RootState = {
+    recordList: RecordItem[],
+    tagList: Tag[],
+    currentTag?: undefined
+}
+
 type RecordItem = {     // TS声明对象类型
     tags: string[],
     notes: string,
     type: string,
     amount: number,     //  数据类型
-    createdAt?: Date   // 类
+    createdAt?: string   // 类
 }
 
 type TagListModel = {
