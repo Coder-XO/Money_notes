@@ -26,7 +26,7 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
-  @Prop() readonly value!: number;
+  @Prop(Number) readonly value!: number;
   output = this.value.toString();    // 内部属性
 
   inputContent(event: MouseEvent) {
@@ -69,9 +69,10 @@ export default class NumberPad extends Vue {
   }
 
   ok() {
-    this.$emit('update:value', this.output);
-    this.$emit('submit',this.output)
-    this.output = '0'
+    const number = parseFloat(this.output);   // 转换成数字类型
+    this.$emit('update:value', number);
+    this.$emit('submit', number);
+    this.output = '0';
   }
 
 }

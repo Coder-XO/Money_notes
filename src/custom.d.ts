@@ -8,11 +8,12 @@ type Tag = {    // 给标签的编辑页面做ID
 type RootState = {
     recordList: RecordItem[],
     tagList: Tag[],
-    currentTag?: undefined
+    currentTag?: undefined,
+    createRecordError: Error | null
 }
 
 type RecordItem = {     // TS声明对象类型
-    tags: string[],
+    tags: Tag[],
     notes: string,
     type: string,
     amount: number,     //  数据类型

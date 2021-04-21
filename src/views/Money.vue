@@ -3,9 +3,9 @@
     <Number-pad :value.sync="record.amount" @submit="saveRecord"/>
     <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
     <div class="notes">
-      <FormItem file-name="备注" @update:value="onUpdateNotes" placeholder="在这里输入备注"/>
+      <FormItem file-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
     </div>
-    <Tags/>
+    <Tags @update:value="record.tags = $event"/>
   </Layout>
 </template>
 <script lang="ts">
@@ -39,26 +39,33 @@ export default class Money extends Vue {
     this.$store.commit('fetchRecords');
   }
 
-  onUpdateNotes(value: string) {
-    this.record.notes = value;
-  }
-
   saveRecord() {
+    if (!this.record.tags || this.record.tags.length === 0) {
+      return window.alert('请至少选择一个标签');
+    }
     this.$store.commit('createRecord', this.record);
+    if (this.$store.state.createRecordError === null) {
+      window.alert('已保存');
+      this.record.notes = '';
+    }
   }
 }
 
 </script>
 <!-- 为了跨CSS作用域-->
 <style lang="scss" scoped>
-.layout-content {
+::v-deep .layout-content {
   //border: 5px solid red;
   display: flex;
   flex-direction: column-reverse;
 }
 
-.notes {
+::v-deep .notes {
   padding: 12px 0;
+}
+
+::v-deep .name {
+  padding-left: 12px;
 }
 </style>
 <style lang="scss" scoped>

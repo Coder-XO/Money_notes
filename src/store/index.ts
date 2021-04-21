@@ -17,7 +17,8 @@ const store = new Vuex.Store({
     state: {     // 相当于 data
         recordList: [],
         tagList: [],
-        currentTag: undefined
+        currentTag: undefined,
+        createRecordError: null
     } as RootState,
     mutations: {    // 相当于 methods
         setCurrentTag(state, id: string) {
@@ -57,20 +58,24 @@ const store = new Vuex.Store({
         fetchRecords(state) {
             state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
         },
-        createRecord(state, record) {
-            const record2: RecordItem = clone(record);
+        createRecord(state, record: RecordItem) {
+            const record2 = clone(record);
             record2.createdAt = new Date().toISOString();
             state.recordList.push(record2);
             store.commit('saveRecords');
-            //recordStore.saveRecords();
-            console.log(state.recordList);
         },
         saveRecords(state) {
             //@ts-ignore
             window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
         },
         fetchTags(state) {
-            return state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+            state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+            if (state.tagList.length === 0 || !state.tagList) {
+                store.commit('createTag', '衣');
+                store.commit('createTag', '食');
+                store.commit('createTag', '住');
+                store.commit('createTag', '行');
+            }
         },
         createTag(state, name: string) {
             const names = state.tagList.map(item => item.name);
