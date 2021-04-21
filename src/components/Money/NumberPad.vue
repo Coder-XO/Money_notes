@@ -27,7 +27,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class NumberPad extends Vue {
   @Prop(Number) readonly value!: number;
-  output = this.value.toString();    // 内部属性
+  output:string = this.value.toString();    // 内部属性
 
   inputContent(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);    // 强制指定类型
@@ -37,8 +37,10 @@ export default class NumberPad extends Vue {
     }
     if (this.output === '0') {     // 对输入的限制
       if (input !== '0') {
-        if ('0123456789'.indexOf(input) >= 0) {
-          this.output = input;
+        if ('0123456789'.indexOf(input!) >= 0) {
+          if (typeof input === 'string') {
+            this.output = input;
+          }
         } else {
           this.output += button.textContent;
           return;
