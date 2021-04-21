@@ -9,7 +9,8 @@ type RootState = {
     recordList: RecordItem[],
     tagList: Tag[],
     currentTag?: undefined,
-    createRecordError: Error | null
+    createRecordError: Error | null,
+    createTagError: Error | null,
 }
 
 type RecordItem = {     // TS声明对象类型
