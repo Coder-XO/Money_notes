@@ -27,7 +27,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class NumberPad extends Vue {
   @Prop(Number) readonly value!: number;
-  output:string = this.value.toString();    // 内部属性
+  output: string = this.value.toString();    // 内部属性
 
   inputContent(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);    // 强制指定类型
@@ -71,6 +71,9 @@ export default class NumberPad extends Vue {
   }
 
   ok() {
+    if (this.output === '0') {
+      return alert('没有输入金额');
+    }
     const number = parseFloat(this.output);   // 转换成数字类型
     this.$emit('update:value', number);
     this.$emit('submit', number);
