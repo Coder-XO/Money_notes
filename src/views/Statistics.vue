@@ -2,7 +2,7 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <div class="chart-wrapper" ref="chartWrapper">
-      <Chart :option="x"
+      <Chart :option="getChartOption"
              class="chart"/>
     </div>
     <ol v-if="groupedList.length>0">
@@ -67,24 +67,24 @@ export default class Statistics extends Vue {
     return (this.$store.state as RootState).recordList;
   }
 
-  get y() {
+  get keyValueList() {
     const today = new Date();
     const array = [];
     for (let i = 0; i <= 29; i++) {   // 添加30天的数据
       // this.recordList = [{date: 7.3, value: 100}, {date: 7.3, value: 100}];
       const dateString = dayjs(today)
           .subtract(i, 'day').format('YYYY-MM-DD');
-      const found = _.find(this.recordList, {    // 查找value值
-        createdAt: dateString
+      const found = _.find(this.groupedList, {    // 查找value值
+        title: dateString
       });
       array.push({
-        date: dateString, value: found ? found.amount : 0
+        key: dateString, value: found ? found.total : 0
       });
     }
     array.sort((a, b) => {    // 数据排序
-      if (a.date > b.date) {
+      if (a.key > b.key) {
         return 1;
-      } else if (a.date === b.date) {
+      } else if (a.key === b.key) {
         return 0;
       } else {
         return -1;
@@ -93,11 +93,9 @@ export default class Statistics extends Vue {
     return array;
   }
 
-  get x() {
-
-    const keys = this.y.map(item => item.date);   // 日期
-    const values = this.y.map(item => item.value);   //  金额
-    console.log(this.recordList.map(r => _.pick(r, ['createdAt', 'amount'])));
+  get getChartOption() {     //  图标的选项
+    const keys = this.keyValueList.map(item => item.key);   // 日期
+    const values = this.keyValueList.map(item => item.value);   //  金额
     return {
       grid: {
         left: 0,
@@ -112,8 +110,8 @@ export default class Statistics extends Vue {
             color: '#297E72'   // 刻度线颜色
           }
         },
-        axisLabel:{
-          formatter: function (value:String, index:number) {
+        axisLabel: {
+          formatter: function (value: String, index: number) {
             return value.substr(5);
           }
         }
