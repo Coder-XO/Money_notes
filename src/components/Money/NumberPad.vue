@@ -95,7 +95,7 @@ export default class NumberPad extends Vue {
     text-align: right;
     box-shadow: inset 0 -5px 5px -5px fade-out(#297E72, 0.6),
     inset 0 5px 5px -5px fade-out(#297E72, 0.6);
-    height: 72px;
+    height: 60px;
   }
 
   .buttons {

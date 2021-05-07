@@ -34,7 +34,6 @@ export default class EditLabel extends Vue {
     const id = this.$route.params.id;
     this.$store.commit('fetchTags');
     this.$store.commit('setCurrentTag', id);
-    //@ts-ignore
     if (!this.currentTag) {
       this.$router.replace('/404');
     }
@@ -57,7 +56,7 @@ export default class EditLabel extends Vue {
   goBack() {
     this.$router.back();
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

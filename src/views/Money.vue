@@ -2,8 +2,16 @@
   <Layout class-prefix="layout"><!-- 向子组件中传递类名来控制CSS -->
     <Number-pad :value.sync="record.amount" @submit="saveRecord"/>
     <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
+    <div class="createdAt">
+      <FormItem file-name="日期"
+                type="date"
+                placeholder="在这里输入日期"
+                :value.sync="record.createdAt"/>
+    </div>
     <div class="notes">
-      <FormItem file-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
+      <FormItem file-name="备注"
+                placeholder="在这里输入备注"
+                :value.sync="record.notes"/>
     </div>
     <Tags @update:value="record.tags = $event"/>
   </Layout>
@@ -27,12 +35,12 @@ export default class Money extends Vue {
   }
 
   recordTypeList = recordTypeList;
-
   record: RecordItem = {
     tags: [],
     notes: '',
     type: '-',
     amount: 0,
+    createdAt: new Date().toISOString()
   };
 
   created() {

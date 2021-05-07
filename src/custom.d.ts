@@ -18,7 +18,7 @@ type RecordItem = {     // TS声明对象类型
     notes: string,
     type: string,
     amount: number,     //  数据类型
-    createdAt?: string   // 类
+    createdAt: string   // 类
 }
 
 type TagListModel = {
@@ -30,14 +30,3 @@ type TagListModel = {
     remove: (id: string) => boolean
 }
 
-interface Window {      //  声明window下挂的属性
-    // store: {
-    //     tagList: Tag[],
-    //     createTag: (name: string) => void,
-    //     removeTag: (id: string) => boolean,
-    //     updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated',
-    //     findTag: (id: string) => Tag | undefined,
-    //     recordList: RecordItem[],
-    //     createRecord: (record: RecordItem) => void
-    // }
-}
