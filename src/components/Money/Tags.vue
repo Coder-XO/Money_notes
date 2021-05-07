@@ -4,7 +4,9 @@
       <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="item in tagList" :key="item.id" :class="{ selected: selectedTags.indexOf(item)>=0 }"
+      <li v-for="item in tagList"
+          :key="item.id"
+          :class="{ selected: selectedTags.indexOf(item)>=0 }"
           @click="toggle(item)">{{ item.name }}
       </li>
     </ul>
@@ -54,6 +56,7 @@ export default class Tags extends mixins(TagHelper) {
   display: flex;
   flex-direction: column-reverse;
   cursor: pointer;
+
   > .current {
     display: flex;
 
