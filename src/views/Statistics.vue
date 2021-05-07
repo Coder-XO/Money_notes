@@ -32,6 +32,7 @@ import recordTypeList from '@/constants/recordTypeList';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
 import Chart from '@/components/Chart.vue';
+import _ from 'lodash';
 
 @Component({
   components: {Tabs, Chart},
@@ -42,7 +43,8 @@ export default class Statistics extends Vue {
   }
 
   mounted() {
-    this.$refs.chartWrapper.scrollLeft = 9999;
+    const div = (this.$refs.chartWrapper as HTMLDivElement);
+    div.scrollLeft = div.scrollWidth;
   }
 
   beautify(string: string) {
@@ -65,7 +67,38 @@ export default class Statistics extends Vue {
     return (this.$store.state as RootState).recordList;
   }
 
+  get y() {
+    const today = new Date();
+    const array = [];
+    for (let i = 0; i <= 29; i++) {   // 添加30天的数据
+      // this.recordList = [{date: 7.3, value: 100}, {date: 7.3, value: 100}];
+      const dateString = dayjs(today)
+          .subtract(i, 'day').format('YYYY-MM-DD');
+      const found = _.find(this.recordList, {    // 查找value值
+        createdAt: dateString
+      });
+      array.push({
+        date: dateString, value: found ? found.amount : 0
+      });
+    }
+    array.sort((a, b) => {    // 数据排序
+      if (a.date > b.date) {
+        return 1;
+      } else if (a.date === b.date) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    return array;
+  }
+
   get x() {
+
+    const keys = this.y.map(item => item.date);   // 日期
+    const values = this.y.map(item => item.value);   //  金额
+    console.log(array);
+    console.log(this.recordList.map(r => _.pick(r, ['createdAt', 'amount'])));
     return {
       grid: {
         left: 0,
@@ -73,17 +106,11 @@ export default class Statistics extends Vue {
       },
       xAxis: {
         type: 'category',
-        data: [
-          '1', '2', '3', '4', '5', '6', '7',
-          '8', '9', '10', '11', '12', '13', '14',
-          '15', '16', '17', '18', '19', '20', '21',
-          '22', '23', '24', '25', '26', '27', '28',
-          '29', '30'
-        ],
-        axisTick:{alignWithLabel:true},
-        axisLine:{
-          lineStyle:{
-            color:'#297E72'   // 刻度线颜色
+        data: keys,
+        axisTick: {alignWithLabel: true},
+        axisLine: {
+          lineStyle: {
+            color: '#297E72'   // 刻度线颜色
           }
         }
       },
@@ -95,24 +122,18 @@ export default class Statistics extends Vue {
         }
       },
       series: [{
-        symbolSize:12,
-        symbol:'circle',    // 点点
-        itemStyle:{
+        symbolSize: 12,
+        symbol: 'circle',    // 点点
+        itemStyle: {
           color: '#3DBCAA'   // 折线颜色
         },
-        data: [
-          150, 230, 224, 218, 135, 147, 260,
-          150, 230, 224, 218, 135, 147, 260,
-          150, 230, 224, 218, 135, 147, 260,
-          150, 230, 224, 218, 135, 147, 260,
-          360, 230
-        ],
+        data: values,
         type: 'line'
       }],
       tooltip: {
-        show: true,triggerOn:'click',
-        formatter:'{c}',
-        position:'top'
+        show: true, triggerOn: 'click',
+        formatter: '{c}',
+        position: 'top'
       }
     };
   }
