@@ -97,7 +97,6 @@ export default class Statistics extends Vue {
 
     const keys = this.y.map(item => item.date);   // 日期
     const values = this.y.map(item => item.value);   //  金额
-    console.log(array);
     console.log(this.recordList.map(r => _.pick(r, ['createdAt', 'amount'])));
     return {
       grid: {
@@ -111,6 +110,11 @@ export default class Statistics extends Vue {
         axisLine: {
           lineStyle: {
             color: '#297E72'   // 刻度线颜色
+          }
+        },
+        axisLabel:{
+          formatter: function (value:String, index:number) {
+            return value.substr(5);
           }
         }
       },
