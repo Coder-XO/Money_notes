@@ -1,7 +1,10 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <Chart :option="x"/>
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart :option="x"
+             class="chart"/>
+    </div>
     <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
@@ -38,6 +41,10 @@ export default class Statistics extends Vue {
     return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
   }
 
+  mounted() {
+    this.$refs.chartWrapper.scrollLeft = 9999;
+  }
+
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -60,6 +67,10 @@ export default class Statistics extends Vue {
 
   get x() {
     return {
+      grid: {
+        left: 0,
+        right: 0
+      },
       xAxis: {
         type: 'category',
         data: [
@@ -67,23 +78,42 @@ export default class Statistics extends Vue {
           '8', '9', '10', '11', '12', '13', '14',
           '15', '16', '17', '18', '19', '20', '21',
           '22', '23', '24', '25', '26', '27', '28',
-            '29','30'
-        ]
+          '29', '30'
+        ],
+        axisTick:{alignWithLabel:true},
+        axisLine:{
+          lineStyle:{
+            color:'#297E72'   // 刻度线颜色
+          }
+        }
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        show: false,
+        splitLine: {
+          show: false
+        }
       },
       series: [{
+        symbolSize:12,
+        symbol:'circle',    // 点点
+        itemStyle:{
+          color: '#3DBCAA'   // 折线颜色
+        },
         data: [
           150, 230, 224, 218, 135, 147, 260,
           150, 230, 224, 218, 135, 147, 260,
           150, 230, 224, 218, 135, 147, 260,
           150, 230, 224, 218, 135, 147, 260,
-            360,230
+          360, 230
         ],
         type: 'line'
       }],
-      tooltip: {show: true}
+      tooltip: {
+        show: true,triggerOn:'click',
+        formatter:'{c}',
+        position:'top'
+      }
     };
   }
 
@@ -172,5 +202,17 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 16px;
   color: #999;
+}
+
+.chart {
+  width: 430%; /* echarts 自带类名 */
+}
+
+.chart-wrapper {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  overflow: auto;
 }
 </style>
